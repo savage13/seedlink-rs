@@ -1,0 +1,6 @@
+[package]
+name = "seedlink"
+version = "0.1.0"
+authors = ["Brian Savage <savage@uri.edu>"]
+
+[dependencies]
