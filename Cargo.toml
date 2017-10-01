@@ -4,3 +4,12 @@ version = "0.1.0"
 authors = ["Brian Savage <savage@uri.edu>"]
 
 [dependencies]
+chrono = "*"
+libc   = "*"
+glob   = "*"
+serde_derive = "1.0"
+serde  = "1.0"
+serde-xml-rs = "0.2"
+
+[dependencies.miniseed]
+path = "../miniseed"
