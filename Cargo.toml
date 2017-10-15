@@ -1,7 +1,14 @@
 [package]
 name = "seedlink"
-version = "0.1.0"
-authors = ["Brian Savage <savage@uri.edu>"]
+version = "1.0.9"
+authors = ["Brian Savage <savage13@gmail.com>"]
+description = "SeedLink library for rust"
+repository = "https://github.com/savage13/seedlink"
+homepage = "https://github.com/savage13/seedlink"
+documentation = "https://docs.rs/seedlink/"
+readme = "README.md"
+keywords = ["miniseed", "seedlink", "seismology"]
+license = "MIT"
 
 [dependencies]
 chrono = "*"
@@ -10,6 +17,7 @@ glob   = "*"
 serde_derive = "1.0"
 serde  = "1.0"
 serde-xml-rs = "0.2"
+# miniseed = "1.0.0"
 
 [dependencies.miniseed]
-path = "../miniseed"
+git = "https://github.com/savage13/miniseed-rs"

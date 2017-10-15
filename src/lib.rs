@@ -4,7 +4,6 @@
 #[macro_use]
 extern crate serde_derive;
 extern crate serde;
-//extern crate serde_xml;
 extern crate serde_xml_rs;
 
 use serde_xml_rs::deserialize;
@@ -56,8 +55,8 @@ pub enum SLError {
 }
 
 impl SeedLinkClient {
-    pub fn new() -> SeedLinkClient {
-        let addr = String::from("craton.geo.uri.edu:18000");
+    pub fn new(host: &str, port: i64) -> SeedLinkClient {
+        let addr = format!("{}:{}", host, port);
         let stream = TcpStream::connect(&addr)
             .expect("Cannot connect to server");
         SeedLinkClient{ stream: stream,
@@ -279,69 +278,12 @@ impl Seedlink {
                 st.push( format!("{}_{}", sta,cha) );
             }
         }
+        st.sort();
         st
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use miniseed::ms_record;
-    //#[test]
-    fn it_works() {
 
-        let mut slc = SeedLinkClient::new(); // This connects
-
-        // Say Hello
-        slc.hello().expect("bad write");
-
-        // Read Response 
-        let mut data = vec![0u8;2048];
-        let n = slc.read(&mut data).expect("bad read");
-        let s = u8_to_string(&data, n);
-        println!("data: {:?}", s);
-
-        slc.start().expect("bad write");
-        let n = slc.read(&mut data).expect("bad read");
-
-        let mut buf = vec![];
-
-        buf.extend(data[..n].iter().cloned());
-
-        println!("{}", buf.len());
-
-        let msr = ms_record::parse(&mut buf[8..(8+512)]);
-        println!("msr: {}", msr);
-        // Say Good bye
-        slc.bye().expect("bad bye");
-    }
-    #[test]
-    fn get_streams() {
-        let mut slc = SeedLinkClient::new(); // This connects
-
-        slc.connect(true).expect("bad hello");
-
-        let info = slc.available_streams().expect("bad streams");
-        for s in info.streams() {
-            println!("{}", s);
-        }
-    }
-    //#[test]
-    fn from_file() {
-        for entry in glob::glob("ff*").unwrap() {
-            if let Ok(f) = entry {
-                use std::io::Read;
-                let mut file = std::fs::File::open(&f).unwrap();
-                let mut buf = vec![];
-                let _ = file.read_to_end(&mut buf).unwrap();
-
-                let num = parse_header(&buf).unwrap();
-                buf.drain(..8);
-
-                let msr = ms_record::parse(&mut buf);
-                buf.drain(..8);
-                println!("{}: {} [{}]", num, msr, buf.len());
-            }
-        }
-    }
 }
