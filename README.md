@@ -1,4 +1,4 @@
-seedlinl
+seedlink
 ========
 SeedLink Library for rust
 
