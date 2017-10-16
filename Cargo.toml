@@ -11,13 +11,11 @@ keywords = ["miniseed", "seedlink", "seismology"]
 license = "MIT"
 
 [dependencies]
-chrono = "*"
-libc   = "*"
-glob   = "*"
-serde_derive = "1.0"
+chrono = "0.4"
+libc   = "0.2"
+glob   = "0.2"
 serde  = "1.0"
+serde_derive = "1.0"
 serde-xml-rs = "0.2"
-# miniseed = "1.0.0"
+miniseed = "1.0.0"
 
-[dependencies.miniseed]
-git = "https://github.com/savage13/miniseed-rs"
