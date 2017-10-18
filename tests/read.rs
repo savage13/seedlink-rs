@@ -4,7 +4,6 @@ extern crate miniseed;
 
 use seedlink::SeedLinkClient;
 
-
 #[test]
 #[ignore]
 fn read() {
@@ -18,26 +17,27 @@ fn read() {
 
     // Read Response
     let n = slc.read(&mut data).expect("bad read");
-    let s = seedlink::u8_to_string(&data, n);
+    let v = data[..n].to_vec();
+    let s = String::from_utf8(v).expect("Found invalid UTF-8");
     println!("data: {:?}", s);
 
     // Initiate Data Stream
     slc.start().expect("bad write");
 
-    // Read Response
-    let n = slc.read(&mut data).expect("bad read");
-
     let mut buf = vec![];
-    buf.extend(data[..n].iter().cloned());
-    println!("{}", buf.len());
+    // Read Response
+    loop {
+        println!("Waiting on read ...");
+        let n = slc.read(&mut data).expect("bad read");
+        buf.extend(data[..n].iter().cloned());
 
-
-    // Parse data
-    let (num, rec) = seedlink::parse(&mut buf).unwrap();
-
-    //let msr = ms_record::parse(&mut buf[8..(8+512)]);
-    println!("{}: {}", num, rec);
-
+        if buf.len() >= 520 {
+            // Parse data
+            let (num, rec) = seedlink::parse(&mut buf).unwrap();
+            println!("{}: {}", num, rec);
+            break;
+        }
+    }
     // Say Good bye
     slc.bye().expect("bad bye");
 }

@@ -1,6 +1,6 @@
 [package]
 name = "seedlink"
-version = "1.0.9"
+version = "1.0.1"
 authors = ["Brian Savage <savage13@gmail.com>"]
 description = "SeedLink library for rust"
 repository = "https://github.com/savage13/seedlink"
